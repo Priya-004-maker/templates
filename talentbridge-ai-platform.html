@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TalentBridge AI — Platform Intelligence</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #04090f;              /* page behind the card            */
+      --surface: #081119;         /* email body                      */
+      --panel: #0b1622;           /* header / cards                  */
+      --footer: #0a151f;          /* footer band                     */
+      --gold: #f5b91e;            /* primary accent                  */
+      --gold-soft: rgba(245, 185, 30, 0.35);
+      --gold-faint: rgba(245, 185, 30, 0.12);
+      --white: #f2f6fa;           /* headings                        */
+      --gray: #8d9aa9;            /* body copy                       */
+      --muted: #5c6a79;           /* footer fine print               */
+      --line: rgba(255, 255, 255, 0.06);
+      --radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Space Mono", "Courier New", monospace;
+      background: #04080d;
+      color: var(--gray);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .email {
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background:
+        radial-gradient(130% 55% at 15% 0%, rgba(35, 90, 118, 0.45) 0%, rgba(16, 44, 62, 0.28) 38%, transparent 68%),
+        linear-gradient(180deg, #0c2030 0%, #081726 26%, #071019 52%, #04080d 100%);
+    }
+
+    /* ---------- Header ---------- */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
+      background: transparent;
+      border-bottom: 1px solid var(--gold-faint);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #081119;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .brand-name {
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-name .accent {
+      color: var(--gold);
+    }
+
+    .brand-tag {
+      color: var(--gold);
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: capitalize;
+      margin-top: 2px;
+    }
+
+    .platform-pill {
+      background: rgba(4, 10, 15, 0.35);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      padding: 6px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* ---------- Content ---------- */
+    .content {
+      padding: 18px 18px 22px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+
+    h1 .accent {
+      color: var(--gold);
+    }
+
+    .lead {
+      font-size: 11.5px;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    /* ---------- Feature cards ---------- */
+    .features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border-radius: 9px;
+      background: rgba(4, 10, 15, 0.5);
+      border: 1px solid var(--gold-faint);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .feature-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 3px;
+    }
+
+    .feature-desc {
+      font-size: 10.5px;
+      line-height: 1.55;
+      color: var(--gray);
+    }
+
+    /* ---------- Training progress card ---------- */
+    .train-card {
+      background: rgba(10, 26, 38, 0.55);
+      border: 1px solid var(--gold-soft);
+      border-radius: var(--radius);
+      padding: 14px 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    .train-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 5px;
+    }
+
+    .train-note {
+      font-size: 10.5px;
+      color: var(--gray);
+      margin-bottom: 12px;
+    }
+
+    .bar {
+      height: 6px;
+      background: #142230;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      width: 34%;
+      background: var(--gold);
+      border-radius: 999px;
+    }
+
+    .train-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .train-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------- CTA ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 12px 22px;
+      border-radius: 10px;
+      background: var(--gold);
+      color: #081119;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: filter 0.15s ease;
+    }
+
+    .btn:hover {
+      filter: brightness(1.08);
+    }
+
+    /* ---------- Footer ---------- */
+    .footer {
+      background: rgba(3, 8, 13, 0.55);
+      border-top: 1px solid var(--line);
+      padding: 18px 18px 20px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 11px;
+    }
+
+    .footer-brand .logo {
+      width: 26px;
+      height: 26px;
+    }
+
+    .footer-brand .logo svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .footer-brand span:last-child {
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .footer-fine {
+      font-size: 10px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+    }
+
+    .footer-links a {
+      font-size: 10px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="email">
+
+    <!-- Header -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7" width="18" height="13" rx="2"/>
+            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+        </span>
+        <div>
+          <div class="brand-name">TalentBridge <span class="accent">AI</span></div>
+          <div class="brand-tag">Job Intelligence Platform</div>
+        </div>
+      </div>
+      <a href="#" class="platform-pill">PLATFORM</a>
+    </header>
+
+    <!-- Body -->
+    <main class="content">
+
+      <span class="tag"># PLATFORM INTELLIGENCE</span>
+
+      <h1>
+        The AI that works for<br>
+        <span class="accent">your career, 24/7.</span>
+      </h1>
+
+      <p class="lead">
+        TalentBridge AI isn't a job board &mdash; it's an autonomous career
+        engine that finds, matches, and applies on your behalf. Here's what
+        makes us different.
+      </p>
+
+      <!-- Features -->
+      <ul class="features">
+        <li class="feature">
+          <span class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="7" width="18" height="13" rx="2"/>
+              <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+          </span>
+          <div>
+            <div class="feature-title">Neural Job Matching</div>
+            <div class="feature-desc">Our AI learns your career DNA &mdash; surfacing roles you'll want, not just keyword hits.</div>
+          </div>
+        </li>
+
+        <li class="feature">
+          <span class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17l6-6 4 4 8-8"/>
+              <path d="M14 7h7v7"/>
+            </svg>
+          </span>
+          <div>
+            <div class="feature-title">Real-time Salary Intel</div>
+            <div class="feature-desc">Live compensation benchmarks so you negotiate from strength, every time.</div>
+          </div>
+        </li>
+
+        <li class="feature">
+          <span class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L3 14h7l-1 8 11-12h-7l1-8z"/>
+            </svg>
+          </span>
+          <div>
+            <div class="feature-title">One-Click Applications</div>
+            <div class="feature-desc">Your AI profile auto-fills every application. Apply to 10 jobs in 2 minutes.</div>
+          </div>
+        </li>
+
+        <li class="feature">
+          <span class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/>
+            </svg>
+          </span>
+          <div>
+            <div class="feature-title">Confidential Search</div>
+            <div class="feature-desc">Block specific companies. Stay invisible until you're ready. Full control.</div>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Training progress -->
+      <section class="train-card">
+        <div class="train-title">Your AI profile is 34% trained</div>
+        <p class="train-note">Add a resume to unlock neural matching.</p>
+        <div class="bar"><span></span></div>
+        <a href="#" class="train-link">Train my AI <span>&rarr;</span></a>
+      </section>
+
+      <!-- CTA -->
+      <a href="#" class="btn">Explore My AI Job Feed <span>&rarr;</span></a>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-brand">
+        <span class="logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7" width="18" height="13" rx="2"/>
+            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+        </span>
+        <span>TalentBridge AI</span>
+      </div>
+      <p class="footer-fine">
+        123 Innovation Drive, Suite 400 &middot; San Francisco, CA 94105<br>
+        &copy; 2026 TalentBridge Inc. All rights reserved.
+      </p>
+      <nav class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Unsubscribe</a>
+        <a href="#">Help Center</a>
+      </nav>
+    </footer>
+
+  </div>
+
+</body>
+</html>
